@@ -24,10 +24,27 @@ TASKS_INVOKER_SA = os.environ.get('TASKS_INVOKER_SA', 'tasks-invoker@closer-vide
 API_URL = "https://facebook-ads-library-scraper-api.p.rapidapi.com/company/ads"
 API_HOST = "facebook-ads-library-scraper-api.p.rapidapi.com"
 
-# Initialize clients
-secret_client = secretmanager.SecretManagerServiceClient()
-tasks_client = tasks_v2.CloudTasksClient()
-db = firestore.Client()
+# Initialize Google Cloud clients (optional - will be None if not available)
+try:
+    secret_client = secretmanager.SecretManagerServiceClient()
+    print("✓ Secret Manager client initialized")
+except Exception as e:
+    secret_client = None
+    print(f"✗ Secret Manager not available: {e}")
+
+try:
+    tasks_client = tasks_v2.CloudTasksClient()
+    print("✓ Cloud Tasks client initialized")
+except Exception as e:
+    tasks_client = None
+    print(f"✗ Cloud Tasks not available: {e}")
+
+try:
+    db = firestore.Client()
+    print("✓ Firestore client initialized")
+except Exception as e:
+    db = None
+    print(f"✗ Firestore not available: {e}")
 
 def verify_id_token(token: str):
     if not token:
@@ -45,10 +62,18 @@ def verify_id_token(token: str):
 
 def get_rapidapi_key():
     """Fetch RapidAPI key from Secret Manager with environment variable fallback"""
+    # Try environment variable first on Render/non-GCP environments
+    if secret_client is None:
+        app.logger.info("Secret Manager not available, using RAPIDAPI_KEY env var")
+        api_key = os.environ.get('RAPIDAPI_KEY', '').strip()
+        if not api_key:
+            raise RuntimeError("RapidAPI key not found - set RAPIDAPI_KEY env var")
+        return api_key
+    
+    # Try Secret Manager (GCP)
     try:
         secret_name = f"projects/{PROJECT}/secrets/{RAPIDAPI_KEY_SECRET}/versions/latest"
         response = secret_client.access_secret_version(request={"name": secret_name})
-        # Decode and strip BOM and whitespace
         api_key = response.payload.data.decode('UTF-8').strip('\ufeff').strip()
         app.logger.info("RapidAPI key fetched from Secret Manager")
         return api_key
@@ -293,7 +318,12 @@ def generate_cookies(output_file: str = "cookies.json", headless: bool = True):
         raise RuntimeError("cookie generation failed") from exc
 
 def create_cloud_task(ad_data):
-    """Create a Cloud Task for processing an ad"""
+    """Create a Cloud Task for processing an ad (skips if Cloud Tasks not available)"""
+    # Skip if Cloud Tasks client not available (e.g., on Render)
+    if tasks_client is None:
+        app.logger.debug(f"Cloud Tasks not available - skipping task creation for ad {ad_data.get('ad_archive_id')}")
+        return None
+    
     # Map to worker payload format
     video_url = ad_data.get('video_hd_url')
     ad_id = str(ad_data.get('ad_archive_id')) if ad_data.get('ad_archive_id') else None
@@ -409,6 +439,10 @@ def run_job():
             app.logger.warning('Continuing with existing cookies (if available)...')
 
         # Fetch all brands from Firestore (single query to minimize operations)
+        if db is None:
+            app.logger.error("Firestore not available - /run endpoint requires GCP Firestore")
+            return jsonify({'error': 'Firestore not configured - this endpoint requires GCP deployment'}), 503
+        
         app.logger.info("Fetching brands from Firestore")
         brands_ref = db.collection('brands')
         brands_list = brands_ref.get(timeout=120.0)  # Use get() instead of stream() - fetches all at once
@@ -458,13 +492,16 @@ def run_job():
                 total_ads_fetched += len(ads)
                 
                 # Update lastFetched and lastFetchedEpoch BEFORE creating tasks to prevent re-processing on retry
-                now = firestore.SERVER_TIMESTAMP
-                now_epoch = int(datetime.now(timezone.utc).timestamp())
-                brand_doc.reference.update({
-                    'lastFetched': now,
-                    'lastFetchedEpoch': now_epoch
-                })
-                app.logger.info(f"✓ Updated Firestore with lastFetchedEpoch={now_epoch}")
+                try:
+                    now = firestore.SERVER_TIMESTAMP
+                    now_epoch = int(datetime.now(timezone.utc).timestamp())
+                    brand_doc.reference.update({
+                        'lastFetched': now,
+                        'lastFetchedEpoch': now_epoch
+                    })
+                    app.logger.info(f"✓ Updated Firestore with lastFetchedEpoch={now_epoch}")
+                except Exception as update_exc:
+                    app.logger.warning(f"Failed to update Firestore for brand {brand_id}: {update_exc}")
                 
                 # Create Cloud Tasks for each ad
                 brand_tasks_created = 0
@@ -540,51 +577,52 @@ def run_page():
         # Use external ad fetcher service (no RapidAPI key required)
         app.logger.info("Using external ad_fetcher service (no RapidAPI key required)")
         
-        # Find brand with matching page_id
-        app.logger.info(f"Searching for brand with page_id={target_page_id}")
-        brands_ref = db.collection('brands')
-        
-        # Try both field names (page_id and pageId)
+        # Handle Firestore operations if available, otherwise use defaults
         brand_doc = None
         brand_data = None
         brand_id = None
+        cutoff_timestamp = None
         
-        # Query by page_id field
-        brands_query = brands_ref.where('page_id', '==', target_page_id).limit(1).stream()
-        for doc in brands_query:
-            brand_doc = doc
-            brand_data = doc.to_dict()
-            brand_id = doc.id
-            break
-        
-        # If not found, try pageId field
-        if not brand_doc:
-            brands_query = brands_ref.where('pageId', '==', target_page_id).limit(1).stream()
+        if db is not None:
+            # Find brand with matching page_id
+            app.logger.info(f"Searching for brand with page_id={target_page_id}")
+            brands_ref = db.collection('brands')
+            
+            # Try both field names (page_id and pageId)
+            # Query by page_id field
+            brands_query = brands_ref.where('page_id', '==', target_page_id).limit(1).stream()
             for doc in brands_query:
                 brand_doc = doc
                 brand_data = doc.to_dict()
                 brand_id = doc.id
                 break
-        
-        if not brand_doc or not brand_data:
-            app.logger.warning(f"No brand found with page_id={target_page_id}")
-            return jsonify({
-                'error': 'brand not found',
-                'page_id': target_page_id
-            }), 404
-        
-        app.logger.info(f"Found brand {brand_id} with page_id={target_page_id}")
-        
-        # Get lastFetchedEpoch or use 6 months default
-        last_fetched_epoch = brand_data.get('lastFetchedEpoch')
-        if last_fetched_epoch:
-            cutoff_timestamp = last_fetched_epoch
-            app.logger.info(f"Brand {brand_id} (page_id={target_page_id}): Using lastFetchedEpoch={last_fetched_epoch}")
+            
+            # If not found, try pageId field
+            if not brand_doc:
+                brands_query = brands_ref.where('pageId', '==', target_page_id).limit(1).stream()
+                for doc in brands_query:
+                    brand_doc = doc
+                    brand_data = doc.to_dict()
+                    brand_id = doc.id
+                    break
+            
+            if brand_doc and brand_data:
+                app.logger.info(f"Found brand {brand_id} with page_id={target_page_id}")
+                # Get lastFetchedEpoch or use 6 months default
+                last_fetched_epoch = brand_data.get('lastFetchedEpoch')
+                if last_fetched_epoch:
+                    cutoff_timestamp = last_fetched_epoch
+                    app.logger.info(f"Brand {brand_id} (page_id={target_page_id}): Using lastFetchedEpoch={last_fetched_epoch}")
+            else:
+                app.logger.warning(f"No brand found with page_id={target_page_id} in Firestore")
         else:
-            # Default to 6 months ago
+            app.logger.info("Firestore not available - using default cutoff")
+        
+        # Use 6 months default if no cutoff found
+        if cutoff_timestamp is None:
             cutoff_date = datetime.now(timezone.utc) - timedelta(days=180)
             cutoff_timestamp = int(cutoff_date.timestamp())
-            app.logger.info(f"Brand {brand_id} (page_id={target_page_id}): No lastFetchedEpoch, using 5 days default ({cutoff_timestamp})")
+            app.logger.info(f"Using 6 months default cutoff ({cutoff_timestamp})")
         
         # Fetch ads for this brand via external fetcher
         app.logger.info(f"Fetching ads for brand {brand_id} (page_id={target_page_id}) with cutoff_timestamp={cutoff_timestamp}")
@@ -600,14 +638,17 @@ def run_page():
                 json.dump(raw_responses, f, indent=2, ensure_ascii=False)
             app.logger.info(f"✅ Saved {len(raw_responses)} raw API responses to {filename}")
         
-        # Update lastFetched and lastFetchedEpoch BEFORE creating tasks
-        now = firestore.SERVER_TIMESTAMP
-        now_epoch = int(datetime.now(timezone.utc).timestamp())
-        brand_doc.reference.update({
-            'lastFetched': now,
-            'lastFetchedEpoch': now_epoch
-        })
-        app.logger.info(f"Updated brand {brand_id} with lastFetched and lastFetchedEpoch={now_epoch} BEFORE task creation")
+        # Update lastFetched and lastFetchedEpoch BEFORE creating tasks (if Firestore available)
+        if db is not None and brand_doc is not None:
+            now = firestore.SERVER_TIMESTAMP
+            now_epoch = int(datetime.now(timezone.utc).timestamp())
+            brand_doc.reference.update({
+                'lastFetched': now,
+                'lastFetchedEpoch': now_epoch
+            })
+            app.logger.info(f"Updated brand {brand_id} with lastFetched and lastFetchedEpoch={now_epoch} BEFORE task creation")
+        else:
+            app.logger.info("Skipping Firestore update (not available or brand not found)")
         
         # Create Cloud Tasks for each ad
         tasks_created = 0
