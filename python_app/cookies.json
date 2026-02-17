@@ -1,0 +1,16 @@
+{
+  "cookies": {
+    "rd_challenge": "Q_6hBQMBrESCPSxiDpza3psshmacHH-52BKhcUSZ7WBjiGVDrXUP1CXQRb4W6eAx0jSXaP0Bfck6_S5Oj-juZ7g5WkjD",
+    "datr": "BHGQaSfSLXEqrFrET_hPr5Mz",
+    "wd": "1280x720"
+  },
+  "lsd": "AdQ5kkFjIrk50ZU4ECTmT6tS4Bs",
+  "doc_id": "25464068859919530",
+  "fetched_at": 1771073799,
+  "network_hits": [
+    {
+      "url": "https://www.facebook.com/api/graphql/",
+      "post": "av=0&__aaid=0&__user=0&__a=1&__req=2&__hs=20498.HYP%3Acomet_plat_default_pkg.2.1...0&dpr=1&__ccg=EXCELLENT&__rev=1033488565&__s=px3vk9%3Antmsec%3A55q2x6&__hsi=7606704034480962369&__dyn=7xe6E5q9zo5ObwKBAg5S1Dxu13wqovzEeUaUco38wCwfW7oqx609vCyU4a0qa2O1Vwooa8462m0nS4oaEd86a3a0EA2C0iK1Axi2a7o2uK1LwPxe2GewbCXw8y0zEnwhE0Caazo11E2XU6-1FwLweq1Iwqo5u0YqwIwtU1fE62&__csr=gT4NkBC9TF2d2vJ9VfAQGdqbiFivKAiHCFah6XxqEPBy8V2oWbUK6oGi48lwLDw8-bwhFoK2y3q78dE5S2Su1nw9i1jAwCwrpoS0h2awl8eU9U2ZwrEfo2zxS1iwUw7rxu0YU0Q-01nWw2rE0ipw0QUw0nt801RfE04AFe068U0rUw4iw&__hsdp=l5O9OEiBFbgaErlykup2U-aVqaC9FF2opEHhmQf8cCwAg4u18UqG5ZuaWGKibCiw923a0OE1b81-86C0Eo7VwJx-mm0-e15GoELc2606VU0jBw1XO01Pmw05oxw&__hblp=01aG05pE6y06hE0mEw37E0Sa0jG03z207kU1XE0w20_80Ci06no0t8w0kro0eKo0faU1dU460cFw0zSw1k60jG0VE2jw9e0ji&__sjsp=l5O9OEiBFbgaErlykup2U-aVqaC9FF2opEHhmQf8cCwAg4u18UqG5ZuaABV8Kpa0A8cE3aw4Iw7Uwqo2xwvC2S7Vpo3WwhqCabP0xw1Ku&__comet_req=94&lsd=AdQ5kkFjIrk50ZU4ECTmT6tS4Bs&jazoest=22210&__spin_r=1033488565&__spin_b=trunk&__spin_t=1771073796&__jssesw=1&fb_api_caller_class=RelayModern&fb_api_req_friendly_name=AdLibraryFilterContextProviderQuery&server_timestamps=true&variables=%7B%22adType%22%3A%22ALL%22%2C%22country%22%3A%22IN%22%2C%22searchType%22%3A%22PAGE%22%2C%22location%22%3Anull%2C%22queryString%22%3Anull%2C%22source%22%3Anull%2C%22sessionId%22%3A%22a4c3967e-7057-4edc-8e01-2cb45a97d754%22%2C%22viewAllPageId%22%3A%22111982120196545%22%7D&doc_id=29650582277919185"
+    }
+  ]
+}

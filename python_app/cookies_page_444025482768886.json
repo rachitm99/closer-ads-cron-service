@@ -1,0 +1,17 @@
+{
+  "cookies": {
+    "rd_challenge": "Q_6hBQNZicnGjArApTXUH7mo9IhtZkJGuD-GOLGCNf3k5nzPARZ1w9T08MQ9G5HAoXLUjo4tR0eJqpWeydBwL1TN45XM",
+    "datr": "FXeQaVVp-zgCZbDkjP2CQusR",
+    "ps_l": "1",
+    "ps_n": "1"
+  },
+  "lsd": "AdSywBCBGZrlnfrSw6eGMpct9zA",
+  "doc_id": "25464068859919530",
+  "fetched_at": 1771075352,
+  "network_hits": [
+    {
+      "url": "https://www.facebook.com/api/graphql/",
+      "post": "av=0&__aaid=0&__user=0&__a=1&__req=3&__hs=20498.HYP%3Acomet_plat_default_pkg.2.1...0&dpr=1&__ccg=EXCELLENT&__rev=1033490055&__s=5cpxpj%3Aqgqm2e%3Ajy9ym5&__hsi=7606710704166104617&__dyn=7xe6E5q9zo5ObwKBAg5S1Dxu13wqovzEeUaUco38wCwfW7oqx609vCyU4a0qa2O1Vwooa8462m0nS4oaEd86a3a0EA2C0iK1Axi2a7o2uK1LwPxe2GewbCXw8y0zEnwhE0Caazo11E2XU6-1FwLweq1Iwqo5u0YqwIwtU1fE62&__csr=gN9b2lteqhFkiAtHOkWEIyZTlJ5FalCCmXRojzoyXgjUG488HyVHDx-EoyEhwcG9y8O2C2u1CAz8989UdU2CwgEvxW3S0wobUiwdK13xi5o5i1Hw5fz89o4S2-2O0va0UE4i014Gw0y5w0gAE0bNocU06Oy00qcu017nwmUrw1zW06Zo11o&__hsdp=l5TPkxalaJ0GxB9yAup2ohyKsibFt2ooIGlpQaQE-m2p0hE4jwxglRUDJd6z9vwcai0MU1bU1_o6u0E827o9E8VUowdu3S13Kdt6Dc7E0gQw1T-07Bo07hq00jxG&__hblp=01e-057o2Iw1yq05H80NK0cUw50w0UVw1p20bSw2Io16E0Eu079E0Yi01Itw25E05se0e9waK9w0LRw5gw3aE13U1h81SU7G&__sjsp=l5TPkxalaJ0GxB9yAup2ohyKsibFt2ooIGlpQaQE-m2p0hE4jwxglRUCmh6z9vwcai0MU1bU1_o6u0E827o9E8VUow4lwgXznhFP1W04d8&__comet_req=94&lsd=AdSywBCBGZrlnfrSw6eGMpct9zA&jazoest=22472&__spin_r=1033490055&__spin_b=trunk&__spin_t=1771075349&__jssesw=1&fb_api_caller_class=RelayModern&fb_api_req_friendly_name=AdLibraryMobileFocusedStateProviderRefetchQuery&server_timestamps=true&variables=%7B%22activeStatus%22%3A%22ACTIVE%22%2C%22adType%22%3A%22ALL%22%2C%22audienceTimeframe%22%3A%22LAST_7_DAYS%22%2C%22bylines%22%3A%5B%5D%2C%22collationToken%22%3A%22823f600b-a43b-4dd3-b5d6-44b75eeaf598%22%2C%22contentLanguages%22%3A%5B%5D%2C%22countries%22%3A%5B%22IN%22%5D%2C%22country%22%3A%22IN%22%2C%22deeplinkAdID%22%3Anull%2C%22excludedIDs%22%3A%5B%5D%2C%22fetchPageInfo%22%3Afalse%2C%22fetchSharedDisclaimers%22%3Afalse%2C%22hasDeeplinkAdID%22%3Afalse%2C%22isAboutTab%22%3Afalse%2C%22isAudienceTab%22%3Afalse%2C%22isLandingPage%22%3Afalse%2C%22isTargetedCountry%22%3Afalse%2C%22location%22%3Anull%2C%22mediaType%22%3A%22ALL%22%2C%22multiCountryFilterMode%22%3Anull%2C%22pageIDs%22%3A%5B%5D%2C%22potentialReachInput%22%3A%5B%5D%2C%22publisherPlatforms%22%3A%5B%5D%2C%22queryString%22%3A%22test%22%2C%22regions%22%3A%5B%5D%2C%22searchType%2"
+    }
+  ]
+}

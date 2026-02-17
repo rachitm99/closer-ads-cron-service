@@ -1,0 +1,20 @@
+{
+  "cookies": {
+    "rd_challenge": "Q_6hBQOqy-4NQ_nNSPqatNqfuMArrRSRxkPBR0EmieEYjiAP8v4JpVS3cm_JiOjewqVhN3zttGWtI0dMTykOynA5pxex",
+    "datr": "CHeQaaQ5W0xueVC5--v9DJOr",
+    "wd": "1280x720"
+  },
+  "lsd": "AdRP1-Siy1gxJKV_4IbmSyjNEvI",
+  "doc_id": "25464068859919530",
+  "fetched_at": 1771075339,
+  "network_hits": [
+    {
+      "url": "https://www.facebook.com/api/graphql/",
+      "post": "av=0&__aaid=0&__user=0&__a=1&__req=7&__hs=20498.HYP%3Acomet_plat_default_pkg.2.1...0&dpr=1&__ccg=EXCELLENT&__rev=1033490055&__s=dkxey3%3Azubcb6%3A4dkwwo&__hsi=7606710648106898956&__dyn=7xeUmwlECdwn8K2Wmh0no6u5U4e1Fx-ewSAwHwNw9G2S2q0_EtxG4o0B-qbwgE1EEb87C1xwEwgo9oO0n24oaEd86a3a1YwBgao6C0Mo6i588Etw8WfK1LwPxe2GewbCXwJwmE2eUlwhE2Lw6OyES0gq0K-1LwqobU3Cwr86C1nwf6Eb87u0jW1ww&__csr=gN5gBnjCAql4F7qYBeGb8LtRrhqiBpFBKZm4US8KQ4-ax22aUKqVUvG68G4o3ayoycwFwDwpF8O2i2u3u0FE4a7UuwZw862-4E3rwgUkxm1kwqU1jUO2m1dwLwIw7Owea14w0J6Aw1tW09cw1zy02Im05P80bNocU05xd01he00JMU03xdw2Jo04tu1rxK06fE0rRw45w&__hsdp=l358iBie2G6kCVAt5gCVVq8jAEibEUC6baBmt2Jaeho9A443i2eb84u268zsqD8QqmqnU32AwcO1swcC0vSU6e0E8W1Uo9E8VUowdu3S13Kdt6Dc7E0gQw1T-07Bo07hq01s8w0dN6&__hblp=01e-057o2Iw1yq0dFU0A20crw3e81g80eeo0mgw2ZE0H60hG0a7w1Oq0f4w0Msw0Y0w25E04fKu04LU0UC0GUC02_m0l20cGw4fw54w7rwuE&__sjsp=l358iBie2G6kCVAt5gCVVq8jAEibEUC6baBmt2Jaeho9A443i2eb84u268zsqACh6BCB-0MF83cwn839w7ZK1zwa2ewu62q2eu6815o4eURQqsMuw13i&__comet_req=94&lsd=AdRP1-Siy1gxJKV_4IbmSyjNEvI&jazoest=22312&__spin_r=1033490055&__spin_b=trunk&__spin_t=1771075336&__jssesw=1&fb_api_caller_class=RelayModern&fb_api_req_friendly_name=AdLibraryMobileFocusedStateProviderRefetchQuery&server_timestamps=true&variables=%7B%22activeStatus%22%3A%22ACTIVE%22%2C%22adType%22%3A%22ALL%22%2C%22audienceTimeframe%22%3A%22LAST_7_DAYS%22%2C%22bylines%22%3A%5B%5D%2C%22collationToken%22%3A%221a1d2368-38c7-4913-88ee-0e0153cef2ed%22%2C%22contentLanguages%22%3A%5B%5D%2C%22countries%22%3A%5B%22IN%22%5D%2C%22country%22%3A%22IN%22%2C%22deeplinkAdID%22%3Anull%2C%22excludedIDs%22%3A%5B%5D%2C%22fetchPageInfo%22%3Afalse%2C%22fetchSharedDisclaimers%22%3Afalse%2C%22hasDeeplinkAdID%22%3Afalse%2C%22isAboutTab%22%3Afalse%2C%22isAudienceTab%22%3Afalse%2C%22isLandingPage%22%3Afalse%2C%22isTargetedCountry%22%3Afalse%2C%22location%22%3Anull%2C%22mediaType%22%3A%22ALL%22%2C%22multiCountryFilterMode%22%3Anull%2C%22pageIDs%22%3A%5B%5D%2C%22potentialReachInput%22%3A%5B%5D%2C%22publisherPlatforms%22%3A%5B%5D%2C"
+    },
+    {
+      "url": "https://www.facebook.com/api/graphql/",
+      "post": "av=0&__aaid=0&__user=0&__a=1&__req=5&__hs=20498.HYP%3Acomet_plat_default_pkg.2.1...0&dpr=1&__ccg=EXCELLENT&__rev=1033490055&__s=dkxey3%3Azubcb6%3A4dkwwo&__hsi=7606710648106898956&__dyn=7xeUmwlECdwn8K2Wmh0no6u5U4e1Fx-ewSAwHwNw9G2S2q0_EtxG4o0B-qbwgE1EEb87C1xwEwgo9oO0n24oaEd86a3a1YwBgao6C0Mo6i588Etw8WfK1LwPxe2GewbCXwJwmE2eUlwhE2Lw6OyES0gq0K-1LwqobU3Cwr86C1nwf6Eb87u0jW1ww&__csr=gN5gBnjCAql4F7qYBeGb8LtRrhqiBpFBKZm4US8KQ4-ax22aUKqVUvG68G4o3ayoycwFwDwpF8O2i2u3u0FE4a7UuwZw862-4E3rwgUkxm1kwqU1jUO2m1dwLwIw7Owea14w0J6Aw1tW09cw1zy02Im05P80bNocU05xd01he00JMU03xdw2Jo04tu1rxK06fE0rRw45w&__hsdp=l358iBie2G6kCVAt5gCVVq8jAEibEUC6baBmt2Jaeho9A443i2eb84u268zsqD8QqmqnU32AwcO1swcC0vSU6e0E8W1Uo9E8VUowdu3S13Kdt6Dc7E0gQw1T-07Bo07hq01s8w0dN6&__hblp=01e-057o2Iw1yq0dFU0A20crw3e81g80eeo0mgw2ZE0H60hG0a7w1Oq0f4w0Msw0Y0w25E04fKu04LU0UC0GUC02_m0l20cGw4fw54w7rwuE&__sjsp=l358iBie2G6kCVAt5gCVVq8jAEibEUC6baBmt2Jaeho9A443i2eb84u268zsqACh6BCB-0MF83cwn839w7ZK1zwa2ewu62q2eu6815o4eURQqsMuw13i&__comet_req=94&lsd=AdRP1-Siy1gxJKV_4IbmSyjNEvI&jazoest=22312&__spin_r=1033490055&__spin_b=trunk&__spin_t=1771075336&__jssesw=1&fb_api_caller_class=RelayModern&fb_api_req_friendly_name=useAdLibraryTypeaheadSuggestionDataSourceQuery&server_timestamps=true&variables=%7B%22queryString%22%3A%22test%22%2C%22isMobile%22%3Afalse%2C%22country%22%3A%22IN%22%2C%22adType%22%3A%22ALL%22%7D&doc_id=9755915494515334"
+    }
+  ]
+}
