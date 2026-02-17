@@ -345,8 +345,15 @@ def create_cloud_task(ad_data):
         app.logger.error(f"❌ Failed to create task for ad {ad_id}: {e}")
         return None
 
+@app.route('/_healthz', methods=['GET'])
+def healthz():
+    """Lightweight, unauthenticated health endpoint for container HEALTHCHECKs."""
+    return 'ok', 200
+
+
 @app.route('/health', methods=['GET'])
 def health():
+    """Authenticated health endpoint used by external monitors (keeps existing behavior)."""
     if not LOCAL_DEV:
         auth_header = request.headers.get('Authorization', '')
         if not auth_header.startswith('Bearer '):

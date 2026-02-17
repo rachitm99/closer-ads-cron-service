@@ -39,5 +39,23 @@ RUN playwright install chromium
 COPY . .
 
 ENV PORT=8080
+
+# Gunicorn tuning (overridable at container runtime)
+ENV GUNICORN_WORKERS=2
+ENV GUNICORN_THREADS=8
+ENV GUNICORN_TIMEOUT=300
+ENV GUNICORN_WORKER_CLASS=gthread
+
 EXPOSE 8080
-CMD ["gunicorn", "-b", "0.0.0.0:8080", "--timeout", "300", "app:app"]
+
+# Start Gunicorn using env-configurable args (threads recommended because the app performs blocking I/O)
+CMD ["sh", "-c", "exec gunicorn -b 0.0.0.0:${PORT} \
+  --workers ${GUNICORN_WORKERS} \
+  --threads ${GUNICORN_THREADS} \
+  --timeout ${GUNICORN_TIMEOUT} \
+  --worker-class ${GUNICORN_WORKER_CLASS} \
+  --log-level info app:app"]
+
+# Container healthcheck (uses unauthenticated /_healthz endpoint added to app)
+HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
+  CMD wget -q -O /dev/null http://localhost:${PORT}/_healthz || exit 1
