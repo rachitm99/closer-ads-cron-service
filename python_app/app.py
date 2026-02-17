@@ -44,12 +44,21 @@ def verify_id_token(token: str):
     raise ValueError('invalid-token')
 
 def get_rapidapi_key():
-    """Fetch RapidAPI key from Secret Manager"""
-    secret_name = f"projects/{PROJECT}/secrets/{RAPIDAPI_KEY_SECRET}/versions/latest"
-    response = secret_client.access_secret_version(request={"name": secret_name})
-    # Decode and strip BOM and whitespace
-    api_key = response.payload.data.decode('UTF-8').strip('\ufeff').strip()
-    return api_key
+    """Fetch RapidAPI key from Secret Manager with environment variable fallback"""
+    try:
+        secret_name = f"projects/{PROJECT}/secrets/{RAPIDAPI_KEY_SECRET}/versions/latest"
+        response = secret_client.access_secret_version(request={"name": secret_name})
+        # Decode and strip BOM and whitespace
+        api_key = response.payload.data.decode('UTF-8').strip('\ufeff').strip()
+        app.logger.info("RapidAPI key fetched from Secret Manager")
+        return api_key
+    except Exception as e:
+        app.logger.warning(f"Secret Manager fetch failed: {e}, falling back to RAPIDAPI_KEY env var")
+        api_key = os.environ.get('RAPIDAPI_KEY', '').strip()
+        if not api_key:
+            raise RuntimeError("RapidAPI key not found in Secret Manager or RAPIDAPI_KEY env var")
+        app.logger.info("RapidAPI key fetched from environment variable")
+        return api_key
 
 def fetch_ads_with_date_filter_rapidapi(api_key, page_id, cutoff_timestamp):
     """Fetch ads from RapidAPI with consecutive all-old-pages mechanism.
