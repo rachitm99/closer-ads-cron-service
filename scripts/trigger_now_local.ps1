@@ -11,25 +11,12 @@ try {
 
     Write-Host ""
     Write-Host "Response:" -ForegroundColor Green
-    Write-Host "Status: $($response.status)"
+    Write-Host "Status:           $($response.status)"
     Write-Host "Brands processed: $($response.brands_processed)"
-    Write-Host "Brands failed: $($response.brands_failed)"
-    Write-Host "Ads fetched: $($response.ads_fetched)"
-    Write-Host "Tasks created: $($response.tasks_created)"
-    Write-Host "Tasks skipped: $($response.tasks_skipped)"
-
-    if ($response.logs -and $response.logs.Count -gt 0) {
-        Write-Host ""
-        Write-Host "Fetcher Logs:" -ForegroundColor Cyan
-        foreach ($log in $response.logs) {
-            Write-Host "  $log"
-        }
-    }
-
-    if ($response.raw_responses -and $response.raw_responses.Count -gt 0) {
-        Write-Host ""
-        Write-Host "Raw Responses: $($response.raw_responses.Count) API calls" -ForegroundColor Magenta
-    }
+    Write-Host "Brands failed:    $($response.brands_failed)"
+    Write-Host "Ads fetched:      $($response.ads_fetched)"
+    Write-Host "Tasks created:    $($response.tasks_created)"
+    Write-Host "Tasks skipped:    $($response.tasks_skipped)"
 }
 catch {
     Write-Host ""

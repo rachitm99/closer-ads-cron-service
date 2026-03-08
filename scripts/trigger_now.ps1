@@ -53,9 +53,10 @@ try {
   if ($resp.status -eq 'ok') {
     Write-Output "SUCCESS!" -ForegroundColor Green
     Write-Output "  Brands processed: $($resp.brands_processed)"
-    Write-Output "  Ads fetched: $($resp.ads_fetched)"
-    Write-Output "  Tasks created: $($resp.tasks_created)"
-    Write-Output "  Tasks skipped: $($resp.tasks_skipped)"
+    Write-Output "  Brands failed:    $($resp.brands_failed)"
+    Write-Output "  Ads fetched:      $($resp.ads_fetched)"
+    Write-Output "  Tasks created:    $($resp.tasks_created)"
+    Write-Output "  Tasks skipped:    $($resp.tasks_skipped)"
     exit 0
   } else {
     Write-Error "Run returned non-ok status: $($resp | ConvertTo-Json -Depth 5)"

@@ -38,4 +38,21 @@ gcloud run services update ads-fetcher-service --update-env-vars="$envVars" --re
 Write-Output "Granting run.invoker to ads-fetcher-invoker service account..."
 gcloud run services add-iam-policy-binding ads-fetcher-service --member="serviceAccount:ads-fetcher-invoker@$Project.iam.gserviceaccount.com" --role="roles/run.invoker" --region=$Region --project=$Project
 
+# Update the Cloud Scheduler job so it always targets the latest service URL and has a message body
+Write-Output "Updating Cloud Scheduler job 'ads-fetcher-cron'..."
+$existingJob = gcloud scheduler jobs describe ads-fetcher-cron --location=$Region --project=$Project 2>&1
+if ($LASTEXITCODE -eq 0) {
+    gcloud scheduler jobs update http ads-fetcher-cron `
+        --uri="$SERVICE_URL/run" `
+        --http-method=POST `
+        --message-body='{}' `
+        --oidc-service-account-email=ads-fetcher-invoker@$Project.iam.gserviceaccount.com `
+        --oidc-token-audience="$SERVICE_URL" `
+        --location=$Region `
+        --project=$Project
+    Write-Output "Scheduler job updated to point at: $SERVICE_URL/run"
+} else {
+    Write-Output "Scheduler job not found - run .\scripts\create_scheduler_job.ps1 to create it"
+}
+
 Write-Output "Deploy complete. SERVICE_URL: $SERVICE_URL"
